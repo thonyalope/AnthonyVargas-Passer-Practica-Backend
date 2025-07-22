@@ -13,6 +13,13 @@ const createTransaction = (pk_transaction, fk_user, description, amount) => {
   }
 };
 
+const getTransaction = (pk_transaction) => {
+  return postgresql.public.one(`
+    SELECT * FROM transactions WHERE pk_transaction = ${pk_transaction};
+  `);
+};
+
 module.exports = {
-  createTransaction
+  createTransaction,
+  getTransaction
 };
