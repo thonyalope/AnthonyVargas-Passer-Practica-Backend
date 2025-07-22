@@ -1,4 +1,5 @@
 const transactionsModel = require('../models/transactions');
+const { get } = require('../routes');
 
 const createTransaction = async (pk_transaction, fk_user, description, amount) => {
   return transactionsModel.createTransaction(pk_transaction, fk_user, description, amount);
@@ -12,8 +13,13 @@ const updateTransaction = async (pk_transaction, fk_user, description, amount) =
   return transactionsModel.updateTransaction(pk_transaction, fk_user, description, amount);
 };
 
+const getTransactions = async (fk_user) => {
+  return transactionsModel.getTransactions(fk_user);
+};
+
 module.exports = {
   createTransaction,
   getTransaction,
-  updateTransaction
+  updateTransaction,
+  getTransactions
 };
