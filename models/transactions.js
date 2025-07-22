@@ -28,8 +28,15 @@ const updateTransaction = (pk_transaction, fk_user, description, amount) => {
   `);
 };
 
+const getTransactions = async (fk_user) => {
+  return await postgresql.public.query(
+    `SELECT * FROM transactions WHERE fk_user = ${fk_user}`
+  );
+};
+
 module.exports = {
   createTransaction,
   getTransaction,
-  updateTransaction
+  updateTransaction,
+  getTransactions
 };
