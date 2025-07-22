@@ -8,14 +8,18 @@ const { postgresql } = require('../databases/postgresql')
  * @returns {{pk_user: number, name: string, status: boolean}}
  */
 const createUser = (pk_user, name) => {
-    try {
-        let user = postgresql.public.one(`insert into users values ('${pk_user}', '${name}', status) returning *;`);
-        return user
-    }
-    catch (e) {
-        throw new Error(e)
-    }
-}
+  try {
+    let user = postgresql.public.one(`
+      INSERT INTO users (pk_user, name, status) 
+      VALUES (${pk_user}, '${name}', true) 
+      RETURNING *;
+    `);
+    return user;
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
 
 /**
  * Update an specific user
