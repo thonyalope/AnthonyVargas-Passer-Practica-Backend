@@ -58,10 +58,23 @@ const getTransactions = async (req, res, next) => {
   }
 };
 
+const getPaginatedTransactions = async (req, res, next) => {
+  const page = parseInt(req.query.page) || 1;
+
+  try {
+    const result = await transactionsService.getPaginatedTransactions(page);
+    res.status(200).send(result);
+    next();
+  } catch (e) {
+    console.error(e.message);
+    res.sendStatus(500) && next(e);
+  }
+};
 
 module.exports = {
   createTransaction,
   getTransaction,
   updateTransaction,
-  getTransactions
+  getTransactions,
+  getPaginatedTransactions
 };

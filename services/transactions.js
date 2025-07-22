@@ -17,9 +17,14 @@ const getTransactions = async (fk_user) => {
   return transactionsModel.getTransactions(fk_user);
 };
 
+const getPaginatedTransactions = async (page) => {
+  return await transactionsModel.getPaginatedTransactions(page);
+};
+
 module.exports = {
   createTransaction,
   getTransaction,
   updateTransaction,
-  getTransactions
+  getTransactions,
+  getPaginatedTransactions
 };

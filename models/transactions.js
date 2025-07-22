@@ -34,9 +34,32 @@ const getTransactions = async (fk_user) => {
   );
 };
 
+const getPaginatedTransactions = async (page = 1) => {
+  const limit = 5;
+  const offset = (page - 1) * limit;
+
+  const transactions = await postgresql.public.query(`
+    SELECT * FROM transactions
+    LIMIT ${limit} OFFSET ${offset};
+  `);
+
+  const { count } = await postgresql.public.one(`
+    SELECT COUNT(*) AS count FROM transactions;
+  `);
+
+  return {
+    transactions,
+    metadata: {
+      count: parseInt(count),
+      page: parseInt(page)
+    }
+  };
+};
+
 module.exports = {
   createTransaction,
   getTransaction,
   updateTransaction,
-  getTransactions
+  getTransactions,
+  getPaginatedTransactions
 };
