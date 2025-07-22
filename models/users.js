@@ -54,12 +54,22 @@ const getUser = (pk_user) => {
  * @returns {pk_user: 1} User primary key
  */
 const deleteUser = (pk_user) => {
-
-    throw new Error('Method not implemented.');
-}
+  try {
+    const user = postgresql.public.one(`
+      UPDATE users
+      SET status = false
+      WHERE pk_user = ${pk_user}
+      RETURNING pk_user;
+    `);
+    return user;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
 
 module.exports = {
     createUser,
     getUser,
-    updateUser
+    updateUser,
+    deleteUser
 }

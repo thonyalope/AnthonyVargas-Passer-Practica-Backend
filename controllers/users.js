@@ -38,8 +38,22 @@ const updateUser = async (req, res, next) => {
     }
 };
 
+const deleteUser = async (req, res, next) => {
+  const { pk_user } = req.params;
+
+  try {
+    const result = await users.deleteUser(parseInt(pk_user));
+    res.status(200).send(result);
+    next();
+  } catch (e) {
+    console.log(e.message);
+    res.sendStatus(500) && next(e);
+  }
+};
+
 module.exports = {
     getUser,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 }
