@@ -19,7 +19,17 @@ const getTransaction = (pk_transaction) => {
   `);
 };
 
+const updateTransaction = (pk_transaction, fk_user, description, amount) => {
+  return postgresql.public.one(`
+    UPDATE transactions 
+    SET fk_user = ${fk_user}, description = '${description}', amount = ${amount}
+    WHERE pk_transaction = ${pk_transaction}
+    RETURNING *;
+  `);
+};
+
 module.exports = {
   createTransaction,
-  getTransaction
+  getTransaction,
+  updateTransaction
 };
